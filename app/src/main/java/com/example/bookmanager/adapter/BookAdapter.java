@@ -45,8 +45,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
         holder.txtAuthor.setText(book.getAuthor());
         holder.txtPublishingHouse.setText(book.getPublishing_house());
 
-        if(book.isBorrowed()){
+        if(book.getBorrowed() == 1){
             holder.ic_book.setColorFilter(Color.GRAY);
+            holder.ic_star.setVisibility(View.VISIBLE);
         }
     }
 
@@ -61,6 +62,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
         public TextView txtAuthor;
         public TextView txtPublishingHouse;
         public ImageView ic_book;
+        public ImageView ic_star;
 
         public BookHolder(View view){
             super(view);
@@ -69,6 +71,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
             txtAuthor = view.findViewById(R.id.txtAuthor);
             txtPublishingHouse = view.findViewById(R.id.txtPublishingHouse);
             ic_book = view.findViewById(R.id.ic_book);
+            ic_star = view.findViewById(R.id.ic_star);
 
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);

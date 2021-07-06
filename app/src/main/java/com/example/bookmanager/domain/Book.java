@@ -5,9 +5,17 @@ public class Book {
     private String title;
     private String author;
     private String publishing_house;
-    private boolean borrowed;
+    private int borrowed;
 
-    public Book(Long id, String title, String author, String publishing_house, boolean borrowed) {
+    public Book(Long id, String title, String author, String publishing_house, int borrowed) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.publishing_house = publishing_house;
+        this.borrowed = borrowed;
+    }
+
+    public Book(String title, String author, String publishing_house, int borrowed) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -47,11 +55,11 @@ public class Book {
         this.publishing_house = publishing_house;
     }
 
-    public boolean isBorrowed() {
+    public int getBorrowed() {
         return borrowed;
     }
 
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(int borrowed) {
         this.borrowed = borrowed;
     }
 }
