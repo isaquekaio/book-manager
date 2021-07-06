@@ -1,6 +1,8 @@
 package com.example.bookmanager.domain;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private Long id;
     private String title;
     private String author;
@@ -16,7 +18,6 @@ public class Book {
     }
 
     public Book(String title, String author, String publishing_house, int borrowed) {
-        this.id = id;
         this.title = title;
         this.author = author;
         this.publishing_house = publishing_house;
