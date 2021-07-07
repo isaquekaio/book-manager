@@ -1,5 +1,6 @@
 package com.example.bookmanager.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,7 +48,7 @@ public class BookDAO {
 
             }
         }
-
+        return books;
     }
 
     private static Book fromCursor(Cursor c){
@@ -59,4 +60,30 @@ public class BookDAO {
 
         return new Book(id, title, author, publishing_house, borrowed);
     }
+
+    public void save(Book book){
+        ContentValues values = new ContentValues();
+        values.put(BookContract.Columns.title, book.getTitle());
+        values.put(BookContract.Columns.author, book.getAuthor());
+        values.put(BookContract.Columns.publishing_house, book.getPublishing_house());
+        values.put(BookContract.Columns.borrowed, book.getBorrowed());
+
+        Long id = db.insert(BookContract.TABLE_NAME, null, values);
+        book.setId(id);
+    }
+
+    public void update(Book book){
+        ContentValues values = new ContentValues();
+        values.put(BookContract.Columns.title, book.getTitle());
+        values.put(BookContract.Columns.author, book.getAuthor());
+        values.put(BookContract.Columns.publishing_house, book.getPublishing_house());
+        values.put(BookContract.Columns.borrowed, book.getBorrowed());
+
+        db.update(BookContract.TABLE_NAME, values, BookContract.Columns._ID+"?", new String[]{String.valueOf(book.getId())});
+    }
+
+    public void delete(Book book){
+        db.delete(BookContract.TABLE_NAME, BookContract.Columns._ID+"?", new String[]{String.valueOf(book.getId())});
+    }
+
 }
