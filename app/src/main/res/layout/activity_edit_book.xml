@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Título"
+        android:text="Title"
         style="?android:attr/textAppearanceMedium"
         >
     </TextView>
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Autor"
+        android:text="Author"
         style="?android:attr/textAppearanceMedium"
         >
     </TextView>
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Editora"
+        android:text="Publishing House"
         style="?android:attr/textAppearanceMedium"
         >
     </TextView>
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Emprestado"
+        android:text="Borrowed"
         android:textStyle="bold"
         style="?android:attr/textAppearanceMedium"
         >
