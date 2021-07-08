@@ -11,20 +11,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static DBHelper instance;
     private static String SQL_CREATE = String.format(
-            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, "+
-            "s% TEXT NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, %s INTEGER NOT NULL",
-            BookContract.TABLE_NAME,
-            BookContract.Columns._ID,
-            BookContract.Columns.title,
-            BookContract.Columns.author,
-            BookContract.Columns.publishing_house,
-            BookContract.Columns.borrowed
+        "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        "%s TEXT NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, %s INTEGER NOT NULL)",
+        BookContract.TABLE_NAME,
+        BookContract.Columns._ID,
+        BookContract.Columns.title,
+        BookContract.Columns.author,
+        BookContract.Columns.publishing_house,
+        BookContract.Columns.borrowed
     );
 
     private static String SQL_DROP = "DROP TABLE IF EXISTS "+BookContract.TABLE_NAME;
 
     private DBHelper(Context context){
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context,DB_NAME,null,DB_VERSION);
     }
 
     public static DBHelper getInstance(Context context){

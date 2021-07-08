@@ -56,6 +56,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
         return books.size();
     }
 
+    public void setItms(List<Book> books){
+        this.books = books;
+    }
     public class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         public TextView txtTitle;

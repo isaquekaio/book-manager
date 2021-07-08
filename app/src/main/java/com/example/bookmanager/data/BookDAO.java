@@ -16,8 +16,8 @@ public class BookDAO {
     private static BookDAO instance;
 
     private BookDAO(Context context){
-        DBHelper dbHelprt = DBHelper.getInstance(context);
-        db = dbHelprt.getWritableDatabase();
+        DBHelper dbHelper = DBHelper.getInstance(context);
+        db = dbHelper.getWritableDatabase();
     }
 
     public static BookDAO getInstance(Context context){
@@ -85,5 +85,4 @@ public class BookDAO {
     public void delete(Book book){
         db.delete(BookContract.TABLE_NAME, BookContract.Columns._ID+"?", new String[]{String.valueOf(book.getId())});
     }
-
 }
