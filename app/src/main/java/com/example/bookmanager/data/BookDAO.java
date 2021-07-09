@@ -79,10 +79,10 @@ public class BookDAO {
         values.put(BookContract.Columns.publishing_house, book.getPublishing_house());
         values.put(BookContract.Columns.borrowed, book.getBorrowed());
 
-        db.update(BookContract.TABLE_NAME, values, BookContract.Columns._ID+"?", new String[]{String.valueOf(book.getId())});
+        db.update(BookContract.TABLE_NAME, values, BookContract.Columns._ID+"=?", new String[]{String.valueOf(book.getId())});
     }
 
     public void delete(Book book){
-        db.delete(BookContract.TABLE_NAME, BookContract.Columns._ID+"?", new String[]{String.valueOf(book.getId())});
+        db.delete(BookContract.TABLE_NAME, BookContract.Columns._ID+"=?", new String[]{String.valueOf(book.getId())});
     }
 }

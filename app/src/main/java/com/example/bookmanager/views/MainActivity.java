@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookmanager.R;
 import com.example.bookmanager.adapter.BookAdapter;
 import com.example.bookmanager.data.BookDAO;
+import com.example.bookmanager.dialogs.DeleteDialog;
 import com.example.bookmanager.domain.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BookAdapter.OnBookListener, DeleteDialog.OnDeleteListener {
 
     private BookDAO bookDAO;
     private BookAdapter bookAdapter;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         bookDAO = BookDAO.getInstance(this);
         List<Book> listBooks = bookDAO.list();
 
-        bookAdapter = new BookAdapter(listBooks, this);
+        bookAdapter = new BookAdapter(listBooks, this, this);
 
         recyclerView.setAdapter(bookAdapter);
     }
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK){
+        if ((requestCode == 100 || requestCode == 101) && resultCode == RESULT_OK){
             updateListBook();
         }
     }
@@ -84,5 +86,29 @@ public class MainActivity extends AppCompatActivity {
         List<Book> books = bookDAO.list();
         bookAdapter.setItms(books);
         bookAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBookClick(int position) {
+        Intent intent = new Intent(getApplicationContext(),EditBookActivity.class);
+        intent.putExtra("book", bookAdapter.getItem(position));
+        startActivityForResult(intent, 101);
+
+    }
+
+    @Override
+    public void onBookLongClick(int position) {
+        Book book = bookAdapter.getItem(position);
+        DeleteDialog dialog = new DeleteDialog();
+        dialog.setBook(book);
+        dialog.show(getSupportFragmentManager(),"deleteDialog");
+    }
+
+    @Override
+    public void onDelete(Book book) {
+        bookDAO.delete(book);
+        updateListBook();
+
+        Toast.makeText(this, "Book deleted with sucess!", Toast.LENGTH_LONG).show();
     }
 }

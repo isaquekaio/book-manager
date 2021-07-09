@@ -21,10 +21,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
 
     private List<Book> books;
     private Context context;
+    private OnBookListener onBookListener;
 
-    public BookAdapter(List<Book> books, Context context){
+    public BookAdapter(List<Book> books, Context context, OnBookListener onBookListener){
         this.books = books;
         this.context = context;
+        this.onBookListener = onBookListener;
     }
 
     @NonNull
@@ -33,7 +35,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
     public BookHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_book, parent, false);
 
-        BookHolder bookHolder = new BookHolder(view);
+        BookHolder bookHolder = new BookHolder(view, onBookListener);
 
         return bookHolder;
     }
@@ -48,6 +50,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
         if(book.getBorrowed() == 1){
             holder.ic_book.setColorFilter(Color.GRAY);
             holder.ic_star.setVisibility(View.VISIBLE);
+        }else{
+            holder.ic_book.setColorFilter(Color.parseColor("#0455BF"));
+            holder.ic_star.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -59,6 +64,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
     public void setItms(List<Book> books){
         this.books = books;
     }
+
+    public Book getItem(int position){
+        return books.get(position);
+    }
+
     public class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         public TextView txtTitle;
@@ -66,8 +76,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
         public TextView txtPublishingHouse;
         public ImageView ic_book;
         public ImageView ic_star;
+        public OnBookListener onBookListener;
 
-        public BookHolder(View view){
+        public BookHolder(View view, OnBookListener onBookListener){
             super(view);
 
             txtTitle = view.findViewById(R.id.txtTitle);
@@ -76,21 +87,30 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder>{
             ic_book = view.findViewById(R.id.ic_book);
             ic_star = view.findViewById(R.id.ic_star);
 
+            this.onBookListener = onBookListener;
+
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            Toast.makeText(context, "OnClick "+(position+1), Toast.LENGTH_SHORT).show();
+            onBookListener.onBookClick(getAdapterPosition());
+            /*int position = getAdapterPosition();
+            Toast.makeText(context, "OnClick "+(position+1), Toast.LENGTH_SHORT).show();*/
         }
 
         @Override
         public boolean onLongClick(View v) {
-            int position = getAdapterPosition();
-            Toast.makeText(context, "OnLongClick "+(position+1), Toast.LENGTH_SHORT).show();
+            onBookListener.onBookLongClick(getAdapterPosition());
+            /*int position = getAdapterPosition();
+            Toast.makeText(context, "OnLongClick "+(position+1), Toast.LENGTH_SHORT).show();*/
             return true;
         }
+    }
+
+    public interface OnBookListener{
+        void onBookClick(int position);
+        void onBookLongClick(int position);
     }
 }
